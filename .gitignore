@@ -1,0 +1,12 @@
+app/hls/*
+app/logs/*
+app/pids/*
+app/streams/*
+app/data/*
+!app/hls/.gitkeep
+!app/logs/.gitkeep
+!app/pids/.gitkeep
+!app/streams/.gitkeep
+!app/data/.gitkeep
+/root/
+*.log
