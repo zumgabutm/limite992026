@@ -1,21 +1,37 @@
 LIMITER99 / limite992026
 
 Pasta do GitHub: limite992026
+Usuário GitHub configurado no instalador: zumgabutm
 Pasta instalada na VPS: /root/limiter99
 Login padrão do painel: admin
 Senha padrão do painel: admin
 
-COMANDO APÓS COLOCAR NO GITHUB
+COMO SUBIR NO GITHUB
 
-1. Suba todo este conteúdo solto no repositório limite992026.
-2. Edite no install.sh a linha GITHUB_ZIP_URL, trocando SEU_USUARIO pelo seu usuário do GitHub.
-3. Instale em uma VPS Ubuntu/Debian com:
+Suba todo este conteúdo solto dentro do repositório:
 
-bash <(curl -fsSL https://raw.githubusercontent.com/SEU_USUARIO/limite992026/main/install.sh)
+install.sh
+README_INSTALACAO.txt
+licenses/
+license-server/
+tools/
+app/
 
-Ou clone e rode:
+Não suba somente o ZIP.
 
-git clone https://github.com/SEU_USUARIO/limite992026.git
+COMANDO PARA INSTALAR NA VPS
+
+Ubuntu/Debian como root:
+
+bash <(curl -fsSL https://raw.githubusercontent.com/zumgabutm/limite992026/main/install.sh)
+
+Se sua branch for master:
+
+bash <(curl -fsSL https://raw.githubusercontent.com/zumgabutm/limite992026/master/install.sh)
+
+Também pode clonar:
+
+git clone https://github.com/zumgabutm/limite992026.git
 cd limite992026
 bash install.sh
 

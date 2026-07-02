@@ -1,8 +1,37 @@
 {
-  "196208": {"active": true, "fingerprint": "", "note": "key inicial"},
-  "19844": {"active": true, "fingerprint": "", "note": "key inicial"},
-  "19966": {"active": true, "fingerprint": "", "note": "key inicial"},
-  "148903": {"active": true, "fingerprint": "", "note": "key inicial"},
-  "763298": {"active": true, "fingerprint": "", "note": "key inicial"},
-  "120762": {"active": true, "fingerprint": "", "note": "key inicial"}
+  "196208": {
+    "active": true,
+    "fingerprint": "",
+    "note": "key inicial"
+  },
+  "19844": {
+    "active": true,
+    "fingerprint": "",
+    "note": "key inicial"
+  },
+  "19966": {
+    "active": true,
+    "fingerprint": "",
+    "note": "key inicial"
+  },
+  "148903": {
+    "active": true,
+    "fingerprint": "",
+    "note": "key inicial"
+  },
+  "763298": {
+    "active": true,
+    "fingerprint": "",
+    "note": "key inicial"
+  },
+  "120762": {
+    "active": true,
+    "fingerprint": "",
+    "note": "key inicial"
+  },
+  "198419": {
+    "active": true,
+    "fingerprint": "",
+    "note": "key adicionada porque foi usada no teste"
+  }
 }

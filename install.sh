@@ -7,7 +7,10 @@ set -Eeuo pipefail
 # Para trava real de key 1 VPS mesmo após formatar, configure LICENSE_SERVER_URL.
 # ==========================================================
 
-GITHUB_ZIP_URL="${GITHUB_ZIP_URL:-https://github.com/SEU_USUARIO/limite992026/archive/refs/heads/main.zip}"
+GITHUB_OWNER="${GITHUB_OWNER:-zumgabutm}"
+GITHUB_REPO="${GITHUB_REPO:-limite992026}"
+GITHUB_BRANCH="${GITHUB_BRANCH:-main}"
+GITHUB_ZIP_URL="${GITHUB_ZIP_URL:-https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/archive/refs/heads/${GITHUB_BRANCH}.zip}"
 INSTALL_DIR="${INSTALL_DIR:-/root/limiter99}"
 PUBLIC_PORT_DEFAULT="${PUBLIC_PORT:-8099}"
 INTERNAL_PORT="${INTERNAL_PORT:-12799}"
@@ -20,6 +23,7 @@ PROJECT_REPO_NAME="limite992026"
 LICENSE_SERVER_URL="${LICENSE_SERVER_URL:-}"
 
 C0='\033[0m'; C1='\033[1;36m'; C2='\033[1;32m'; C3='\033[1;33m'; C4='\033[1;31m'; C5='\033[1;35m'
+trap 'echo -e "${C4}✘ Instalação interrompida na linha $LINENO. Veja a mensagem acima.${C0}" >&2' ERR
 
 banner() {
   clear || true
@@ -35,9 +39,9 @@ BANNER
   echo -e "${C0}"
 }
 
-msg(){ echo -e "${C2}✔${C0} $*"; }
-warn(){ echo -e "${C3}⚠${C0} $*"; }
-err(){ echo -e "${C4}✘${C0} $*"; }
+msg(){ echo -e "${C2}✔${C0} $*" >&2; }
+warn(){ echo -e "${C3}⚠${C0} $*" >&2; }
+err(){ echo -e "${C4}✘${C0} $*" >&2; }
 
 need_root() {
   if [ "${EUID}" -ne 0 ]; then
@@ -103,12 +107,12 @@ prepare_repo_source() {
 
   tmp="$(mktemp -d)"
   zip="$tmp/repo.zip"
-  msg "Baixando arquivos do GitHub..."
-  if [[ "$GITHUB_ZIP_URL" == *"SEU_USUARIO"* ]]; then
-    err "Edite GITHUB_ZIP_URL no install.sh com o link do seu GitHub antes de usar via curl."
-    exit 1
+  msg "Baixando arquivos do GitHub: ${GITHUB_OWNER}/${GITHUB_REPO} (${GITHUB_BRANCH})..."
+  if ! curl -LfsS "$GITHUB_ZIP_URL" -o "$zip"; then
+    warn "Não consegui baixar pela branch ${GITHUB_BRANCH}. Tentando branch master..."
+    GITHUB_ZIP_URL="https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/archive/refs/heads/master.zip"
+    curl -LfsS "$GITHUB_ZIP_URL" -o "$zip"
   fi
-  curl -LfsS "$GITHUB_ZIP_URL" -o "$zip"
   unzip -q "$zip" -d "$tmp"
   repo_dir=$(find "$tmp" -maxdepth 2 -type d -name app -printf '%h\n' | head -n1)
   if [ -z "$repo_dir" ] || [ ! -f "$repo_dir/app/index.php" ]; then
@@ -376,6 +380,12 @@ main() {
 
   read -rp "Porta de acesso público [${PUBLIC_PORT_DEFAULT}]: " PUBLIC_PORT
   PUBLIC_PORT="${PUBLIC_PORT:-$PUBLIC_PORT_DEFAULT}"
+  if ! [[ "$PUBLIC_PORT" =~ ^[0-9]+$ ]] || [ "$PUBLIC_PORT" -lt 1 ] || [ "$PUBLIC_PORT" -gt 65535 ]; then
+    err "Porta inválida: $PUBLIC_PORT"
+    exit 1
+  fi
+  echo
+  msg "Modo escolhido: $WEB_MODE | Porta: $PUBLIC_PORT"
 
   local repo_dir keys_file fp public_ip
   repo_dir=$(prepare_repo_source)

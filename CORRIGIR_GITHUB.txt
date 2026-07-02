@@ -1,0 +1,27 @@
+CORREÇÃO IMPORTANTE DO GITHUB
+
+O install.sh precisa ficar no GitHub com as quebras de linha corretas.
+Se o raw do GitHub mostrar o install.sh em poucas linhas ou tudo em uma linha, ele não vai instalar.
+
+Faça assim:
+1. Apague o install.sh antigo no repositório.
+2. Suba este install.sh novo.
+3. Suba também as pastas app, licenses, license-server e tools por cima.
+4. Teste no navegador/terminal:
+   curl -fsSL https://raw.githubusercontent.com/zumgabutm/limite992026/main/install.sh | head -n 20
+
+Tem que aparecer várias linhas, começando assim:
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+Depois rode na VPS:
+bash <(curl -fsSL https://raw.githubusercontent.com/zumgabutm/limite992026/main/install.sh)
+
+Keys inclusas:
+196208
+19844
+19966
+148903
+763298
+120762
+198419
